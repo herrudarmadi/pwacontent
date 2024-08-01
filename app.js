@@ -17,5 +17,6 @@ window.addEventListener('load', function() {
 });
 
 function download(el, url) {
-    
+    fetch(url);
+    console.log('download clicked for ' + url);
 }
