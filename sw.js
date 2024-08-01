@@ -44,7 +44,8 @@ self.addEventListener("activate", (event) => {
 // On fetch, intercept server requests
 // and respond with cached responses instead of going to network
 self.addEventListener("fetch", (event) => {
-
+  console.log('listening for fetch event ');
+  console.log(event);
   // For all other requests, go to the cache first, and then the network.
   event.respondWith(
     (async () => {
