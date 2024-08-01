@@ -38,7 +38,7 @@ navigator.serviceWorker.addEventListener('message', function(e) {
     
     switch (e.data.type) {
         case 'VIEW_RESOURCE_RESPONSE':
-            document.getElementById('content-viewer').html = e.data.payload;
+            document.getElementById('content-viewer').innerHTML = e.data.payload;
         break;
     }
 });
