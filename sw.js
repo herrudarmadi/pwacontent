@@ -89,7 +89,8 @@ self.addEventListener("fetch", (event) => {
                   const sourceRegex = /<source[^>]+src="([^">]+)"/g;
                   const linkRegex = /<link[^>]+href="([^">]+)"/g;
                   const scriptRegex = /<script[^>]+src="([^">]+)"/g;
-      
+
+                  const resourceUrls = [];
                   const regexes = [imgRegex, audioRegex, videoRegex, sourceRegex, linkRegex, scriptRegex];
                   
                   // Extract URLs using regex
@@ -101,7 +102,7 @@ self.addEventListener("fetch", (event) => {
                   });
       
                   // Fetch and cache additional resources
-                  resources.forEach(resourceUrl => {
+                  resourcesUrls.forEach(resourceUrl => {
                       fetch(resourceUrl)
                           .then(resourceResponse => {
                               if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
