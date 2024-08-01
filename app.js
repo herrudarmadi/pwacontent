@@ -29,7 +29,7 @@ function view(url) {
                 payload: url
             });
         }
-    }
+    });
 }
 
 navigator.serviceWorker.addEventListener('message', function(e) {
