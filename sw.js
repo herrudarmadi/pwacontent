@@ -41,26 +41,43 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-self.addEventListener('message', function(e) {
+self.addEventListener('message', function(event) {
   console.log('get msg from app');
-  console.log(e);
-  
-  switch (e.data.type) {
-    case 'VIEW_RESOURCE':
+  console.log(event);
 
-      const cache = await caches.open('dynamic-v1');
-      const cacheResponse = await cache.match(e.data.payload);
-      
-      clients.matchAll().then(clients => {
-        clients.forEach(client => {
-          sendMessageToClient(client, {
-            type: 'VIEW_RESOURCE_RESPONSE',
-            payload: cacheResponse
+  var p = caches.open('dynamic-v1').then(function(cache) {
+    switch (e.data.type) {
+      case 'VIEW_RESOURCE':
+        cache.match(e.data.payload).then( resource => {
+          var resourceResponse = 'Not available';
+          if (resource) {
+            resourceResponse = resource;
+          }
+
+          clients.matchAll().then(clients => {
+            clients.forEach(client => {
+              sendMessageToClient(client, {
+                type: 'VIEW_RESOURCE_RESPONSE',
+                payload: resourceResponse
+              });
+            });
           });
         });
-      });
-    break;
+        
+      break;
+    }
+  });
+
+  // Beginning in Chrome 51, event is an ExtendableMessageEvent, which supports
+  // the waitUntil() method for extending the lifetime of the event handler
+  // until the promise is resolved.
+  if ('waitUntil' in event) {
+    event.waitUntil(p);
   }
+
+  // Without support for waitUntil(), there's a chance that if the promise chain
+  // takes "too long" to execute, the service worker might be automatically
+  // stopped before it's complete.
 });
 
 // On fetch, intercept server requests
