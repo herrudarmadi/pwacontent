@@ -80,6 +80,22 @@ self.addEventListener('message', function(event) {
   // stopped before it's complete.
 });
 
+function sendMessageToClient(client, message) {
+    return new Promise(function(resolve, reject) {
+        const msgChan = new MessageChannel();
+
+        msgChan.port1.onmessage = function(event) {
+            if (event.data.error) {
+                reject(event.data.error);
+            } else {
+                resolve(event.data);
+            }
+        };
+
+        client.postMessage(message, [msgChan.port2]);
+    });
+}
+
 // On fetch, intercept server requests
 // and respond with cached responses instead of going to network
 self.addEventListener("fetch", (event) => {
