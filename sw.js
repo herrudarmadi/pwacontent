@@ -62,6 +62,7 @@ self.addEventListener("fetch", (event) => {
       // once by cache and once by the browser for fetch, we need
       // to clone the request.
       var fetchRequest = event.request.clone();
+      // var fetchRequest = new Request(event.data.url, {mode: 'no-cors'});
       return fetch(fetchRequest)
           .then(function(response) {
                     // Check if we received a valid response
@@ -103,7 +104,7 @@ self.addEventListener("fetch", (event) => {
       
                   // Fetch and cache additional resources
                   resourceUrls.forEach(resourceUrl => {
-                      fetch(resourceUrl)
+                      fetch(new Request(resourceUrl, {mode: 'no-cors'}))
                           .then(resourceResponse => {
                               if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
                                   throw new Error('Failed to fetch resource: ' + resourceUrl);
