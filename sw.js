@@ -45,7 +45,7 @@ self.addEventListener('message', function(event) {
   console.log('get msg from app');
   console.log(event);
 
-  var p = caches.open('dynamic-v1').then(function(cache) {
+  var p = caches.open('dynamic-v1').then(async function(cache) {
     switch (e.data.type) {
       case 'VIEW_RESOURCE':
         cache.match(e.data.payload).then( resource => {
