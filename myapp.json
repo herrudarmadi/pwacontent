@@ -1,0 +1,11 @@
+{
+    "name": "PWAcontent",
+    "start_url": ".",
+    "icons": [
+      {
+        "src": "logo.svg",
+        "sizes": "any"
+      }
+    ]
+  }
+  
