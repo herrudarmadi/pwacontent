@@ -48,7 +48,7 @@ self.addEventListener('message', function(event) {
   var p = caches.open('dynamic-v1').then(async function(cache) {
     switch (event.data.type) {
       case 'VIEW_RESOURCE':
-        return cache.match(event.data.payload).then( resource => {
+        return cache.match(event.data.payload).then(async function(resource) {
           var resourceResponse = 'Not available';
           if (resource) {
             resourceResponse = await resource.text();
