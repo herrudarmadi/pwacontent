@@ -12,9 +12,10 @@
     <div id="offlineMessage" style="display:none;color:red;">Offline, but you can continue working</div>
 <p>Things to do in this session</p>
 <ul>
-  <li>Content 1 <button onclick="download(this, 'content01.html')">download</button></li>
-  <li>Content 2 <button onclick="download(this, 'content02.html')">download</button></li>
+  <li>Content 1 <button onclick="download(this, 'content01.html')">download</button><button onclick="view('content01.html')">view</button></li>
+  <li>Content 2 <button onclick="download(this, 'content02.html')">download</button><button onclick="view('content02.html')">view</button></li>
 </ul>
+    <div id="content-viewer"></div>
   <script src="app.js"></script>
   <!-- Register the app's service worker. -->
     <script>
