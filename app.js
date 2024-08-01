@@ -31,3 +31,14 @@ function view(url) {
         }
     }
 }
+
+navigator.serviceWorker.addEventListener('message', function(e) {
+    console.log('received message from sw');
+    console.log(e);
+    
+    switch (e.data.type) {
+        case 'VIEW_RESOURCE_RESPONSE':
+            document.getElementById('content-view').html = e.data.payload;
+        break;
+    }
+});
