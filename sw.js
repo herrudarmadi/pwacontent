@@ -116,66 +116,58 @@ self.addEventListener("fetch", (event) => {
       // can only be consumed once. Since we are consuming this
       // once by cache and once by the browser for fetch, we need
       // to clone the request.
-      var fetchRequest = event.request.clone();
-      // var fetchRequest = new Request(event.data.url, {mode: 'no-cors'});
-      return fetch(fetchRequest)
-          .then(function(response) {
-                    // Check if we received a valid response
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
-                        return response;
-                    }
-
-                    // IMPORTANT: Clone the response. A response is a stream
-                    // and because we want the browser to consume the response
-                    // as well as the cache consuming the response, we need
-                    // to clone it so we have two streams.
-                    var responseToCache = response.clone();
-
-                    caches.open('dynamic-v1').then(function(cache) {
-                        cache.put(event.request, responseToCache);
-                    });
-
-                    return response.text();
-                }
-            ).then(function(htmlString) {
-                  // Parse the HTML to find additional resources
-                  const imgRegex = /<img[^>]+src="([^">]+)"/g;
-                  const audioRegex = /<audio[^>]+src="([^">]+)"/g;
-                  const videoRegex = /<video[^>]+src="([^">]+)"/g;
-                  const sourceRegex = /<source[^>]+src="([^">]+)"/g;
-                  const linkRegex = /<link[^>]+href="([^">]+)"/g;
-                  const scriptRegex = /<script[^>]+src="([^">]+)"/g;
-
-                  const resourceUrls = [];
-                  const regexes = [imgRegex, audioRegex, videoRegex, sourceRegex, linkRegex, scriptRegex];
-                  
-                  // Extract URLs using regex
-                  regexes.forEach(regex => {
-                      let match;
-                      while (match = regex.exec(htmlString)) {
-                          resourceUrls.push(match[1]);
-                      }
-                  });
+      const fetchRequest = event.request.clone();
+      const response = await fetch(fetchRequest);
       
-                  // Fetch and cache additional resources
-                  resourceUrls.forEach(resourceUrl => {
-                      fetch(new Request(resourceUrl, {mode: 'no-cors'}))
-                          .then(resourceResponse => {
-                              if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
-                                  throw new Error('Failed to fetch resource: ' + resourceUrl);
-                              }
-                              caches.open('dynamic-v1').then(cache => {
-                                  cache.put(resourceUrl, resourceResponse.clone());
-                              });
-                          })
-                          .catch(error => {
-                              console.error('Failed to cache resource: ', resourceUrl, error);
-                          });
-                  });
-            });
+      // Check if we received a valid response
+      if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
+      }
+
+      // IMPORTANT: Clone the response. A response is a stream
+      // and because we want the browser to consume the response
+      // as well as the cache consuming the response, we need
+      // to clone it so we have two streams.
+      var responseToCache = response.clone();
+
+      caches.open('dynamic-v1').then(function(cache) {
+          cache.put(event.request, responseToCache);
+      });
+
+      const htmlString = await response.text();
+      
+      // Parse the HTML to find additional resources
+      const imgRegex = /<img[^>]+src="([^">]+)"/g;
+      const audioRegex = /<audio[^>]+src="([^">]+)"/g;
+      const videoRegex = /<video[^>]+src="([^">]+)"/g;
+      const sourceRegex = /<source[^>]+src="([^">]+)"/g;
+      const linkRegex = /<link[^>]+href="([^">]+)"/g;
+      const scriptRegex = /<script[^>]+src="([^">]+)"/g;
+
+      const resourceUrls = [];
+      const regexes = [imgRegex, audioRegex, videoRegex, sourceRegex, linkRegex, scriptRegex];
+      
+      // Extract URLs using regex
+      regexes.forEach(regex => {
+          let match;
+          while (match = regex.exec(htmlString)) {
+              resourceUrls.push(match[1]);
+          }
+      });
+      
+      // Fetch and cache additional resources
+      resourceUrls.forEach(async function(resourceUrl) {
+          const resourceResponse = await fetch(resourceUrl);
+              
+          if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
+              throw new Error('Failed to fetch resource: ' + resourceUrl);
+          }
+          const cache = await caches.open('dynamic-v1');
+          cache.put(resourceUrl, resourceResponse.clone());
+      });
       
       // If resource isn't in the cache, return a 404.
-      // return new Response(null, { status: 404 });
+      return new Response(null, { status: 404 });
     })(),
   );
 });
