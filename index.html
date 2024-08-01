@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="myapp.json" />
+    <link rel="icon" href="logo.svg" />
+</head>
+<body>
+    <div id="offlineMessage" style="display:none;color:red;">Offline, but you can continue working</div>
+<p>Things to do in this session</p>
+<ul>
+  <li>Content 1 <button onclick="download(this, 'content01.html')">download</button></li>
+  <li>Content 2 <button onclick="download(this, 'content02.html')">download</button></li>
+</ul>
+  <script src="app.js"></script>
+  <!-- Register the app's service worker. -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js", {scope: '/pwacontent/'});
+        }
+    </script>
+  
+</body>
+</html>
