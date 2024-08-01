@@ -41,6 +41,25 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+self.addEventListener('message', function(e) {
+  switch (e.data.type) {
+    case 'VIEW_RESOURCE':
+
+      const cache = await caches.open('dynamic-v1');
+      const cacheResponse = await cache.match(e.data.payload);
+      
+      clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          sendMessageToClient(client, {
+            type: 'VIEW_RESOURCE_RESPONSE',
+            payload: cacheResponse
+          });
+        });
+      });
+    break;
+  }
+});
+
 // On fetch, intercept server requests
 // and respond with cached responses instead of going to network
 self.addEventListener("fetch", (event) => {
