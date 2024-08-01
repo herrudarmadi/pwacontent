@@ -83,25 +83,21 @@ self.addEventListener("fetch", (event) => {
                 }
             ).then(function(htmlString) {
                   // Parse the HTML to find additional resources
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(htmlString, 'text/html');
+                  const imgRegex = /<img[^>]+src="([^">]+)"/g;
+                  const audioRegex = /<audio[^>]+src="([^">]+)"/g;
+                  const videoRegex = /<video[^>]+src="([^">]+)"/g;
+                  const sourceRegex = /<source[^>]+src="([^">]+)"/g;
+                  const linkRegex = /<link[^>]+href="([^">]+)"/g;
+                  const scriptRegex = /<script[^>]+src="([^">]+)"/g;
       
-                  // Collect URLs of additional resources
-                  const resources = [];
-                  const tags = ['img', 'audio', 'video', 'source', 'link[rel="stylesheet"]', 'script'];
-                  tags.forEach(tag => {
-                      const elements = doc.querySelectorAll(tag);
-                      elements.forEach(element => {
-                          let url = '';
-                          if (tag === 'link' || tag === 'script') {
-                              url = element.getAttribute('href');
-                          } else {
-                              url = element.getAttribute('src');
-                          }
-                          if (url) {
-                              resources.push(url);
-                          }
-                      });
+                  const regexes = [imgRegex, audioRegex, videoRegex, sourceRegex, linkRegex, scriptRegex];
+                  
+                  // Extract URLs using regex
+                  regexes.forEach(regex => {
+                      let match;
+                      while (match = regex.exec(htmlString)) {
+                          resourceUrls.push(match[1]);
+                      }
                   });
       
                   // Fetch and cache additional resources
