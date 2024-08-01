@@ -20,3 +20,14 @@ function download(el, url) {
     fetch(url);
     console.log('download clicked for ' + url);
 }
+
+function view(url) {
+    navigator.serviceWorker.ready.then(function(registration) {
+        if (registration.active) {
+            registration.active.postMessage({
+                type: 'VIEW_RESOURCE',
+                payload: url
+            });
+        }
+    }
+}
