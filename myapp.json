@@ -1,6 +1,6 @@
 {
     "name": "PWAcontent",
-    "start_url": ".",
+    "start_url": "index.html",
     "icons": [
       {
         "src": "logo.svg",
