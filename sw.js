@@ -51,7 +51,7 @@ self.addEventListener('message', function(event) {
         return cache.match(event.data.payload).then( resource => {
           var resourceResponse = 'Not available';
           if (resource) {
-            resourceResponse = resource;
+            resourceResponse = await resource.text();
           }
 
           clients.matchAll().then(clients => {
