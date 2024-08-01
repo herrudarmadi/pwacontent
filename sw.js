@@ -42,6 +42,9 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener('message', function(e) {
+  console.log('get msg from app');
+  console.log(e);
+  
   switch (e.data.type) {
     case 'VIEW_RESOURCE':
 
