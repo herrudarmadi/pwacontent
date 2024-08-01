@@ -15,3 +15,7 @@ window.addEventListener('online', () => {
 window.addEventListener('load', function() {
     document.getElementById('offlineMessage').style.display = (navigator.onLine ? 'none' : 'block');
 });
+
+function download(el, url) {
+    
+}
