@@ -62,8 +62,8 @@ self.addEventListener("fetch", (event) => {
       // once by cache and once by the browser for fetch, we need
       // to clone the request.
       var fetchRequest = event.request.clone();
-      return fetch(fetchRequest).then(
-                function(response) {
+      return fetch(fetchRequest)
+          .then(function(response) {
                     // Check if we received a valid response
                     if (!response || response.status !== 200 || response.type !== 'basic') {
                         return response;
@@ -79,9 +79,47 @@ self.addEventListener("fetch", (event) => {
                         cache.put(event.request, responseToCache);
                     });
 
-                    return response;
+                    return response.text();
                 }
-            );
+            ).then(function(htmlString) {
+                  // Parse the HTML to find additional resources
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(htmlString, 'text/html');
+      
+                  // Collect URLs of additional resources
+                  const resources = [];
+                  const tags = ['img', 'audio', 'video', 'source', 'link[rel="stylesheet"]', 'script'];
+                  tags.forEach(tag => {
+                      const elements = doc.querySelectorAll(tag);
+                      elements.forEach(element => {
+                          let url = '';
+                          if (tag === 'link' || tag === 'script') {
+                              url = element.getAttribute('href');
+                          } else {
+                              url = element.getAttribute('src');
+                          }
+                          if (url) {
+                              resources.push(url);
+                          }
+                      });
+                  });
+      
+                  // Fetch and cache additional resources
+                  resources.forEach(resourceUrl => {
+                      fetch(resourceUrl)
+                          .then(resourceResponse => {
+                              if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
+                                  throw new Error('Failed to fetch resource: ' + resourceUrl);
+                              }
+                              caches.open('dynamic-v1').then(cache => {
+                                  cache.put(resourceUrl, resourceResponse.clone());
+                              });
+                          })
+                          .catch(error => {
+                              console.error('Failed to cache resource: ', resourceUrl, error);
+                          });
+                  });
+            });
       
       // If resource isn't in the cache, return a 404.
       // return new Response(null, { status: 404 });
