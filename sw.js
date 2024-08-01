@@ -102,7 +102,7 @@ self.addEventListener("fetch", (event) => {
                   });
       
                   // Fetch and cache additional resources
-                  resourcesUrls.forEach(resourceUrl => {
+                  resourceUrls.forEach(resourceUrl => {
                       fetch(resourceUrl)
                           .then(resourceResponse => {
                               if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
