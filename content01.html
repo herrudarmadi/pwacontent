@@ -6,8 +6,6 @@
 <p><a class="nav-content-page" href="#p2" onclick="gotoPage(this)">Next page</a></p>
 </div>
 
-<div style="margin-bottom:1000px"></div>
-
 <div id="p2" class="pages">
 <p>Content 01</p>
 <p>Page 2 Goes here..</p>
@@ -29,20 +27,3 @@
     display:none;
   }
 </style>
-
-<script>
-  const pages = document.getElementsByClassName('pages');
-  function gotoPage(el) {
-    const pageTarget = el.getAttribute('href').replace('#','');
-    pages.forEach(p => {
-      p.style.display = p.getAttribute('id') == pageTarget ? 'block' : 'none';
-    });
-    // store the progress for the next visit.
-    localStorage.setItem('progress-content01', pageTarget);
-  }
-
-  const lastVisitedPage = localStorage.getItem('progress-content01');
-  if (lastVisitedPage) {
-    gotoPage(lastVisitedPage);
-  }
-</script>
