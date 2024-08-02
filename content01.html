@@ -1,16 +1,48 @@
-<div id="p1">
+<div id="p1" class="pages" style="display:block">
 <p>Content 01</p>
 <p>Page 1 Goes here..</p>
 <img src="sample-img.png">
 <img src="https://herrudarmadi.github.io/pwacontent/sample-img.png">
-<a href="#p2">Next page</a>
+<p><a class="nav-content-page" href="#p2" onclick="gotoPage(this)">Next page</a></p>
 </div>
 
 <div style="margin-bottom:1000px"></div>
 
-<div id="p2">
+<div id="p2" class="pages">
 <p>Content 01</p>
 <p>Page 2 Goes here..</p>
 <video src="sample-video.mp4" controls></video>
-<a href="#p1">Prev page</a>
+  <p>
+  <a class="nav-content-page" onclick="gotoPage(this)" href="#p1">Prev page</a> | 
+  <a class="nav-content-page" onclick="gotoPage(this)" href="#p3">Next page</a>
+  </p>
 </div>
+
+<div id="p3" class="pages">
+<p>Content 01</p>
+<p>Page 3 Goes here.. this is the summary page.</p>
+<p><a class="nav-content-page" onclick="gotoPage(this)" href="#p2">Prev page</a></p>
+</div>
+
+<style>
+  .pages {
+    display:none;
+  }
+</style>
+
+<script>
+  const pages = document.getElementsByClassName('pages');
+  function gotoPage(el) {
+    const pageTarget = el.getAttribute('href').replace('#','');
+    pages.forEach(p => {
+      p.style.display = p.getAttribute('id') == pageTarget ? 'block' : 'none';
+    });
+    // store the progress for the next visit.
+    localStorage.setItem('progress-content01', pageTarget);
+  }
+
+  const lastVisitedPage = localStorage.getItem('progress-content01');
+  if (lastVisitedPage) {
+    gotoPage(lastVisitedPage);
+  }
+</script>
