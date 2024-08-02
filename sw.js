@@ -158,10 +158,12 @@ self.addEventListener("fetch", (event) => {
       const resourceUrls = [];
       const regexes = [imgRegex, audioRegex, videoRegex, sourceRegex, linkRegex, scriptRegex];
       
+      console.log('resources inside this html string:');
       // Extract URLs using regex
       regexes.forEach(regex => {
           let match;
           while (match = regex.exec(htmlString)) {
+            console.log(match[1]);
               resourceUrls.push(match[1]);
           }
       });
