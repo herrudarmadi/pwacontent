@@ -3,6 +3,7 @@ const VERSION = "v0.0.0";
 
 // The name of the cache
 const CACHE_NAME = `pwacontent-${VERSION}`;
+const DYNAMIC_CACHE_NAME = 'dynamic-v1';
 
 const DIR = '/pwacontent';
 
@@ -45,7 +46,7 @@ self.addEventListener('message', function(event) {
   console.log('get msg from app');
   console.log(event);
 
-  var p = caches.open('dynamic-v1').then(async function(cache) {
+  var p = caches.open(DYNAMIC_CACHE_NAME).then(async function(cache) {
     switch (event.data.type) {
       case 'VIEW_RESOURCE':
         return cache.match(event.data.payload).then(async function(resource) {
@@ -104,14 +105,27 @@ self.addEventListener("fetch", (event) => {
   // For all other requests, go to the cache first, and then the network.
   event.respondWith(
     (async () => {
+      // CHECK STATIC CACHE
       const cache = await caches.open(CACHE_NAME);
       const cachedResponse = await cache.match(event.request.url);
       
       if (cachedResponse) {
         // Return the cached response if it's available.
         return cachedResponse;
-      }
+      } 
+      // END CHECK STATIC CACHE
 
+      // CHECK DYNAMIC CACHE
+      const dynamicCaches = await caches.open(DYNAMIC_CACHE_NAME);
+      const dynamicCacheResponse = await dynamicCaches.match(event.request.url);
+
+      if (dynamicCacheResponse) {
+        // Return the cached response if it's available.
+        return dynamicCacheResponse;
+      } 
+
+      // NOT FOUND IN DYNAMIC CACHE, CONTINUE ADDING IT
+      
       // IMPORTANT: Clone the request. A request is a stream and
       // can only be consumed once. Since we are consuming this
       // once by cache and once by the browser for fetch, we need
@@ -119,21 +133,18 @@ self.addEventListener("fetch", (event) => {
       const fetchRequest = event.request.clone();
       const response = await fetch(fetchRequest);
       
-      // Check if we received a valid response
+      // Check if we received a invalid response
       if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
-      }
+        return response;
+      } 
 
       // IMPORTANT: Clone the response. A response is a stream
       // and because we want the browser to consume the response
       // as well as the cache consuming the response, we need
       // to clone it so we have two streams.
       var responseToCache = response.clone();
-
-      caches.open('dynamic-v1').then(function(cache) {
-          cache.put(event.request, responseToCache);
-      });
-
+      dynamicCaches.put(event.request, responseToCache);
+      
       const htmlString = await response.text();
       
       // Parse the HTML to find additional resources
@@ -162,12 +173,10 @@ self.addEventListener("fetch", (event) => {
           if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
               throw new Error('Failed to fetch resource: ' + resourceUrl);
           }
-          const cache = await caches.open('dynamic-v1');
-          cache.put(resourceUrl, resourceResponse.clone());
+          dynamicCaches.put(resourceUrl, resourceResponse.clone());
       });
       
-      // If resource isn't in the cache, return a 404.
-      return new Response(null, { status: 404 });
+      
     })(),
   );
 });
