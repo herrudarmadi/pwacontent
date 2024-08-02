@@ -32,7 +32,7 @@ self.addEventListener("activate", (event) => {
       const names = await caches.keys();
       await Promise.all(
         names.map((name) => {
-          if (name !== CACHE_NAME) {
+          if ([CACHE_NAME, DYNAMIC_CACHE_NAME].indexOf(name) == -1) {
             return caches.delete(name);
           }
         }),
