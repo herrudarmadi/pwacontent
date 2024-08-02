@@ -17,7 +17,12 @@ window.addEventListener('load', function() {
 });
 
 function download(el, url) {
-    fetch(url);
+    fetch(url)
+        .then(() => {
+            el.innerText = 'Downloaded';
+        }).catch(e => {
+            console.error(e);
+        });
     console.log('download clicked for ' + url);
 }
 
