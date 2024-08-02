@@ -44,6 +44,25 @@ navigator.serviceWorker.addEventListener('message', function(e) {
     switch (e.data.type) {
         case 'VIEW_RESOURCE_RESPONSE':
             document.getElementById('content-viewer').innerHTML = e.data.payload;
+            loadLastVisitedPage();
         break;
     }
 });
+
+// content page function
+function gotoPage(el) {
+    const pages = document.getElementsByClassName('pages');
+    const pageTarget = el.getAttribute('href').replace('#','');
+    pages.forEach(p => {
+      p.style.display = p.getAttribute('id') == pageTarget ? 'block' : 'none';
+    });
+    // store the progress for the next visit.
+    localStorage.setItem('progress-content01', pageTarget);
+}
+
+function loadLastVisitedPage() {
+    const lastVisitedPage = localStorage.getItem('progress-content01');
+    if (lastVisitedPage) {
+        gotoPage(lastVisitedPage);
+    }
+}
