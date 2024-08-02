@@ -53,9 +53,10 @@ navigator.serviceWorker.addEventListener('message', function(e) {
 function gotoPage(el) {
     const pages = document.getElementsByClassName('pages');
     const pageTarget = el.getAttribute('href').replace('#','');
-    pages.forEach(p => {
+    for (var i = 0; i < pages.length; i++) {
+      const p = pages[i];
       p.style.display = p.getAttribute('id') == pageTarget ? 'block' : 'none';
-    });
+    }
     // store the progress for the next visit.
     localStorage.setItem('progress-content01', pageTarget);
 }
