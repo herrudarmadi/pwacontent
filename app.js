@@ -52,7 +52,8 @@ navigator.serviceWorker.addEventListener('message', function(e) {
 // content page function
 function gotoPage(el) {
     const pages = document.getElementsByClassName('pages');
-    const pageTarget = el.getAttribute('href').replace('#','');
+    const pageTarget = el.nodeType ? el.getAttribute('href').replace('#','') : el;
+    
     for (var i = 0; i < pages.length; i++) {
       const p = pages[i];
       p.style.display = p.getAttribute('id') == pageTarget ? 'block' : 'none';
