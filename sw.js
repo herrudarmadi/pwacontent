@@ -50,7 +50,7 @@ self.addEventListener('message', function(event) {
     switch (event.data.type) {
       case 'VIEW_RESOURCE':
         return cache.match(event.data.payload).then(async function(resource) {
-          var resourceResponse = 'Not available';
+          var resourceResponse = 'Not available.';
           if (resource) {
             resourceResponse = await resource.text();
           }
@@ -118,7 +118,7 @@ self.addEventListener("fetch", (event) => {
       // CHECK DYNAMIC CACHE
       const dynamicCaches = await caches.open(DYNAMIC_CACHE_NAME);
       const dynamicCacheResponse = await dynamicCaches.match(event.request.url);
-
+      
       if (dynamicCacheResponse) {
         // Return the cached response if it's available.
         return dynamicCacheResponse;
@@ -171,11 +171,11 @@ self.addEventListener("fetch", (event) => {
           const resourceResponse = await fetch(resourceUrl);
               
           if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
-              throw new Error('Failed to fetch resource: ' + resourceUrl);
+            // throw new Error('Failed to fetch resource: ' + resourceUrl);
+            return; // continue to the next resources
           }
           dynamicCaches.put(resourceUrl, resourceResponse.clone());
       });
-      
       
     })(),
   );
