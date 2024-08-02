@@ -177,7 +177,7 @@ self.addEventListener("fetch", (event) => {
           dynamicCaches.put(resourceUrl, resourceResponse.clone());
       });
 
-      return response;
+      return responseToCache;
     })(),
   );
 });
