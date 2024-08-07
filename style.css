@@ -1,1 +1,58 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+}
 
+#offlineMessage {
+  background: #333;
+  color: #fff;
+}
+
+#sidemenu {
+  background: #0097da;
+  color: #fff;
+  width: 20%;
+}
+
+#main-area {
+  width: 80%;
+  padding: 16px;
+}
+
+#session-desc {
+  width: 60%;
+}
+
+#things-to-do {
+  width: 40%;
+  background: linear-gradient(#f3931b,#c06c00);
+  height: fit-content;
+  padding: 0 16px;
+}
+
+#main-tabs {
+  padding-inline-start: 0;
+  border: 2px solid rgb(243, 147, 27);
+}
+
+#main-tabs li.session-tab {
+    display: inline-block;
+  background: rgb(217, 217, 217);
+    padding: 12px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+#main-tabs li.session-tab.active {
+  background: rgb(243, 147, 27);
+  color: #fff;
+}
+
+#tab-content {
+  display: flex;
+}
+#body {
+  display:flex;
+  height: 100%;
+}
