@@ -33,7 +33,7 @@ body {
 
 #main-tabs {
   padding-inline-start: 0;
-  border: 2px solid rgb(243, 147, 27);
+  border-bottom: 2px solid rgb(243, 147, 27);
 }
 
 #main-tabs li.session-tab {
