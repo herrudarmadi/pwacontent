@@ -59,6 +59,9 @@ body {
   height: 100%;
 }
 
-h6, p {
+h6, #session-desc p {
   margin: 4px 0;
+}
+h6 {
+  color: #999;
 }
