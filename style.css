@@ -68,6 +68,9 @@ h6 {
   color: #999;
 }
 
+#things-to-do ul {
+  padding-inline-start: 0;
+}
 
 #things-to-do li {
     margin: 8px 0;
