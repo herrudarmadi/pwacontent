@@ -43,7 +43,11 @@ navigator.serviceWorker.addEventListener('message', function(e) {
     
     switch (e.data.type) {
         case 'VIEW_RESOURCE_RESPONSE':
-            document.getElementById('content-viewer').innerHTML = e.data.payload;
+            const outlineArea = document.getElementById('course-outline');
+            const contentArea = document.getElementById('content-viewer');
+            outlineArea.style.display = "none";
+            contentArea.style.display = "block";
+            contentArea.innerHTML = e.data.payload;
             loadLastVisitedPage();
         break;
     }
