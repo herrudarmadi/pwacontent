@@ -3,19 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Classroom</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="myapp.json" />
     <link rel="icon" href="logo.svg" />
 </head>
 <body>
     <div id="offlineMessage" style="display:none;color:red;">Offline, but you can continue working</div>
-<p>Things to do in this session</p>
-<ul>
-  <li>Content 1 <button onclick="download(this, 'content01.html')">download</button><button onclick="view('content01.html')">view</button></li>
-  <li>Content 2 <button onclick="download(this, 'content02.html')">download</button><button onclick="view('content02.html')">view</button></li>
-</ul>
-    <div id="content-viewer"></div>
+
+    <div>
+        <div id="sidemenu"></div>
+        <div id="main-area">
+            <h1>E-Supply Chain Management</h1>
+            <span>ISYE6175</span> - <span>Class01</span>
+            <ul id="main-tabs">
+                <li class="session-tab active">Session 1</li>
+                <li class="session-tab">Session 2</li>
+                <li class="session-tab">Session 3</li>
+                <li class="session-tab">Session 4</li>
+            </ul>
+            <div>
+                <div id="session-desc">
+                    <h3>Introduction to E-Supply Chain Management and ERP</h3>
+                    <h4>Learning Outcomes:</h4>
+                    <ol>
+                        <li>Peserta mampu menjelaskan manfaat dan Keterbatasan dari sistem manajemen e-supply chain. </li>
+                        <li>Peserta mampu menganalisis tren dan teknologi baru yang digunakan dalam manajemen e-supply chain.</li>
+                        <li>Peserta mampu mengevaluasi implementasi sistem manajemen database berdasarkan prinsip-prinsip e-supply chain management dalam kehidupan sehari-hari</li>
+                    </ol>
+                    <h4>Sub Topics:</h4>
+                    <ol>
+                        <li>E-Supply Chain Management</li>
+                        <li>ERP in Manufacturing Industry</li>
+                        <li>ERP in Service Industry</li>
+                        <li>Development and Challenges Nowadays</li>
+                        <li>Cloud & System Technology Application</li>
+                        <li>E-SCM emerging technologies: blockchain, Internet of Things (IoT), big data analytics, and Artificial Intelligence in ERP System</li>
+                    </ol>
+                    <hr />
+                    <h6>Start</h6>
+                    <p>08 Aug 2024, 00:00 GMT+7</p>
+                    <h6>End</h6>
+                    <p>15 Aug 2024, 23:59 GMT+7</p>
+                    <h6>Delivery Mode:</h6>
+                    <p>Online - OL</p>
+                </div>
+                <div id="things-to-do">
+                    <p>Things to do in this session</p>
+                    <ul>
+                      <li>Content 1 <button onclick="download(this, 'content01.html')">download</button><button onclick="view('content01.html')">view</button></li>
+                      <li>Content 2 <button onclick="download(this, 'content02.html')">download</button><button onclick="view('content02.html')">view</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="content-viewer"></div>
+    </div>
   <script src="app.js"></script>
   <!-- Register the app's service worker. -->
     <script>
