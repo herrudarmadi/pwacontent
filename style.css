@@ -29,6 +29,8 @@ body {
   background: linear-gradient(#f3931b,#c06c00);
   height: fit-content;
   padding: 0 16px;
+  border-radius: 8px;
+  color: #fff;
 }
 
 #main-tabs {
@@ -55,4 +57,8 @@ body {
 #body {
   display:flex;
   height: 100%;
+}
+
+h6, p {
+  margin: 4px 0;
 }
