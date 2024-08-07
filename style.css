@@ -92,3 +92,6 @@ h6 {
 #things-to-do li:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+#things-to-do li .resource {
+  width: 50%;
+}
