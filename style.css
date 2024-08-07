@@ -67,3 +67,25 @@ h6, #session-desc p {
 h6 {
   color: #999;
 }
+
+
+#things-to-do li {
+    margin: 8px 0;
+    display: flex;
+    padding: 8px;
+    border-radius: 8px;
+    align-items: center;
+}
+
+#things-to-do li::before {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    content: " ";
+    margin-right: 8px;
+    border-radius: 8px;
+}
+#things-to-do li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
