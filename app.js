@@ -47,7 +47,7 @@ navigator.serviceWorker.addEventListener('message', function(e) {
             const contentArea = document.getElementById('content-area');
             outlineArea.style.display = "none";
             contentArea.style.display = "block";
-            document.getElementById('content-viewer');.innerHTML = e.data.payload;
+            document.getElementById('content-viewer').innerHTML = e.data.payload;
             loadLastVisitedPage();
         break;
     }
