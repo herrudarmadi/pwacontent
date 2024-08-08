@@ -78,9 +78,10 @@ h6 {
     padding: 8px;
     border-radius: 8px;
     align-items: center;
+    justify-content: space-between;
 }
 
-#things-to-do li::before {
+#things-to-do li .resource::before {
     display: block;
     width: 50px;
     height: 50px;
@@ -93,5 +94,6 @@ h6 {
     background: rgba(255, 255, 255, 0.1);
 }
 #things-to-do li .resource {
-  width: 50%;
+  display: flex;
+  align-items: center;
 }
