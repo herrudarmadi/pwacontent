@@ -163,7 +163,7 @@ self.addEventListener("fetch", (event) => {
       var responseToCache = response.clone();
       dynamicCaches.put(event.request, responseToCache);
       
-      const htmlString = await response.text();
+      const htmlString = await responseToCache.text();
       
       // Parse the HTML to find additional resources
       const imgRegex = /<img[^>]+src="([^">]+)"/g;
