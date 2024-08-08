@@ -97,6 +97,7 @@ h6 {
 #things-to-do li .resource {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 #back-to-course-outline {
