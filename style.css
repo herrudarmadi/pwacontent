@@ -114,3 +114,8 @@ h6 {
 .act-download {
   cursor:pointer;
 }
+
+#content-viewer {
+  height: 700px;
+  overflow: auto;
+}
