@@ -50,7 +50,7 @@ self.addEventListener('message', function(event) {
     switch (event.data.type) {
       case 'VIEW_RESOURCE':
         return cache.match(event.data.payload).then(async function(resource) {
-          var resourceResponse = 'Not available.';
+          var resourceResponse = 'Content is not available.';
           if (resource) {
             resourceResponse = await resource.text();
           }
