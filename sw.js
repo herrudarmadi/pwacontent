@@ -68,13 +68,16 @@ self.addEventListener('message', function(event) {
       break;
         
       case 'CHECK_RESOURCE_AVAILABILITY':
-        return cache.match(event.data.payload).then(async function(resource) {
+        return cache.match(event.data.payload.url).then(async function(resource) {
           
           clients.matchAll().then(clients => {
             clients.forEach(client => {
               sendMessageToClient(client, {
                 type: 'CHECK_RESOURCE_AVAILABILITY_RESPONSE',
-                payload: (resource ? true : false)
+                  payload: {
+                    elementID: event.data.payload.elementID,
+                    status: (resource ? true : false)
+                  }
               });
             });
           });

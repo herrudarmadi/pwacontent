@@ -14,6 +14,25 @@ window.addEventListener('online', () => {
 
 window.addEventListener('load', function() {
     document.getElementById('offlineMessage').style.display = (navigator.onLine ? 'none' : 'block');
+
+    navigator.serviceWorker.ready.then(function(registration) {
+        if (registration.active) {
+            registration.active.postMessage({
+                type: 'CHECK_RESOURCE_AVAILABILITY',
+                payload: {
+                    elementID: 'content01',
+                    url: 'content01.html'
+                }
+            });
+            registration.active.postMessage({
+                type: 'CHECK_RESOURCE_AVAILABILITY',
+                payload: {
+                    elementID: 'content02',
+                    url: 'content02.html'
+                }
+            });
+        }
+    });
 });
 
 function download(el, url) {
@@ -49,6 +68,12 @@ navigator.serviceWorker.addEventListener('message', function(e) {
             contentArea.style.display = "block";
             document.getElementById('content-viewer').innerHTML = e.data.payload;
             loadLastVisitedPage();
+        break;
+
+        case 'CHECK_RESOURCE_AVAILABILITY_RESPONSE':
+            const element = document.getElementById(e.data.payload.elementID);
+            element.querySelector('.act-download').style.display = e.data.payload.status ? "none" : "";
+            element.querySelector('.act-downloaded').style.display = e.data.payload.status ? "" : "none";
         break;
     }
 });
