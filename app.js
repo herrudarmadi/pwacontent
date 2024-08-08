@@ -53,6 +53,13 @@ navigator.serviceWorker.addEventListener('message', function(e) {
     }
 });
 
+document.getElementById('back-to-course-outline').onclick = function() {
+    const outlineArea = document.getElementById('course-outline');
+    const contentArea = document.getElementById('content-area');
+    outlineArea.style.display = "block";
+    contentArea.style.display = "none";
+};
+
 // content page function
 function gotoPage(el) {
     const pages = document.getElementsByClassName('pages');
