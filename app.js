@@ -47,12 +47,12 @@ function download(el, url) {
     console.log('download clicked for ' + url);
 }
 
-function view(url) {
+function view(el, url) {
     navigator.serviceWorker.ready.then(function(registration) {
         if (registration.active) {
             registration.active.postMessage({
                 type: 'VIEW_RESOURCE',
-                payload: url
+                payload: {elementID: el, url: url}
             });
         }
     });
@@ -68,9 +68,10 @@ navigator.serviceWorker.addEventListener('message', function(e) {
             const contentArea = document.getElementById('content-area');
             outlineArea.style.display = "none";
             contentArea.style.display = "block";
-            document.getElementById('content-viewer').innerHTML = e.data.payload;
+            document.getElementById('content-viewer').innerHTML = e.data.payload.html;
+            
             loadLastVisitedPage();
-        break;
+        // break; remove break, because after view resource, it will also execute the checkmark for resource avail
 
         case 'CHECK_RESOURCE_AVAILABILITY_RESPONSE':
             const element = document.getElementById(e.data.payload.elementID);

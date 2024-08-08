@@ -49,13 +49,13 @@ self.addEventListener('message', function(event) {
   var p = caches.open(DYNAMIC_CACHE_NAME).then(async function(cache) {
     switch (event.data.type) {
       case 'VIEW_RESOURCE':
-        return cache.match(event.data.payload).then(async function(resource) {
+        return cache.match(event.data.payload.url).then(async function(resource) {
           var resourceResponse = 'Content is not available.';
           if (resource) {
             resourceResponse = await resource.text();
           } else {
             try {
-              const resp = await fetch(event.data.payload);
+              const resp = await fetch(event.data.payload.url);
             resourceResponse = await resp.text();
             } catch (error) {}
           }
@@ -64,7 +64,7 @@ self.addEventListener('message', function(event) {
             clients.forEach(client => {
               sendMessageToClient(client, {
                 type: 'VIEW_RESOURCE_RESPONSE',
-                payload: resourceResponse
+                payload: {html: resourceResponse, elementID: event.data.payload.elementID}
               });
             });
           });
