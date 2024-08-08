@@ -161,7 +161,7 @@ self.addEventListener("fetch", (event) => {
       // as well as the cache consuming the response, we need
       // to clone it so we have two streams.
       var responseToCache = response.clone();
-      dynamicCaches.put(event.request, responseToCache);
+      dynamicCaches.put(event.request, responseToCache.clone());
       
       const htmlString = await response.text();
       
@@ -182,14 +182,12 @@ self.addEventListener("fetch", (event) => {
           let match;
           while (match = regex.exec(htmlString)) {
             console.log(match[1]);
-            resourceUrls.push(match[1]);
+              resourceUrls.push(match[1]);
           }
       });
       
-      
       // Fetch and cache additional resources
-      await Promise.all(
-        resourceUrls.map(async function(resourceUrl) {
+      resourceUrls.forEach(async function(resourceUrl) {
           const resourceResponse = await fetch(resourceUrl);
               
           if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
@@ -197,8 +195,7 @@ self.addEventListener("fetch", (event) => {
             return; // continue to the next resources
           }
           dynamicCaches.put(resourceUrl, resourceResponse.clone());
-        })
-      );
+      });
 
       return responseToCache;
     })(),
