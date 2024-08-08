@@ -54,7 +54,7 @@ self.addEventListener('message', function(event) {
           if (resource) {
             resourceResponse = await resource.text();
           } else {
-            const resp = await fetch(url);
+            const resp = await fetch(event.data.payload);
             resourceResponse = await resp.text();
           }
 
