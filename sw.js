@@ -163,7 +163,7 @@ self.addEventListener("fetch", (event) => {
       var responseToCache = response.clone();
       dynamicCaches.put(event.request, responseToCache);
       
-      const htmlString = await responseToCache.text();
+      const htmlString = await response.text();
       
       // Parse the HTML to find additional resources
       const imgRegex = /<img[^>]+src="([^">]+)"/g;
@@ -182,12 +182,14 @@ self.addEventListener("fetch", (event) => {
           let match;
           while (match = regex.exec(htmlString)) {
             console.log(match[1]);
-              resourceUrls.push(match[1]);
+            resourceUrls.push(match[1]);
           }
       });
       
+      
       // Fetch and cache additional resources
-      resourceUrls.forEach(async function(resourceUrl) {
+      await Promise.all(
+        resourceUrls.map(async function(resourceUrl) {
           const resourceResponse = await fetch(resourceUrl);
               
           if (!resourceResponse || resourceResponse.status !== 200 || resourceResponse.type !== 'basic') {
@@ -195,7 +197,8 @@ self.addEventListener("fetch", (event) => {
             return; // continue to the next resources
           }
           dynamicCaches.put(resourceUrl, resourceResponse.clone());
-      });
+        })
+      );
 
       return responseToCache;
     })(),
