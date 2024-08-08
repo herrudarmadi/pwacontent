@@ -38,7 +38,9 @@ window.addEventListener('load', function() {
 function download(el, url) {
     fetch(url)
         .then(() => {
-            el.innerText = 'Downloaded';
+            // el.innerText = 'Downloaded';
+            el.querySelector('.act-download').style.display = "none";
+            el.querySelector('.act-downloaded').style.display = "";
         }).catch(e => {
             console.error(e);
         });
