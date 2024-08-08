@@ -53,6 +53,9 @@ self.addEventListener('message', function(event) {
           var resourceResponse = 'Content is not available.';
           if (resource) {
             resourceResponse = await resource.text();
+          } else {
+            const resp = await fetch(url);
+            resourceResponse = await resp.text();
           }
 
           clients.matchAll().then(clients => {
