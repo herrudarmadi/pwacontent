@@ -111,3 +111,6 @@ h6 {
   line-height: 50px;
   text-align: center;
 }
+.act-download {
+  cursor:pointer;
+}
