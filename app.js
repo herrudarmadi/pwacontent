@@ -17,20 +17,14 @@ window.addEventListener('load', function() {
 
     navigator.serviceWorker.ready.then(function(registration) {
         if (registration.active) {
-            registration.active.postMessage({
-                type: 'CHECK_RESOURCE_AVAILABILITY',
-                payload: {
-                    elementID: 'content01',
-                    url: 'content01.html'
-                }
-            });
-            registration.active.postMessage({
-                type: 'CHECK_RESOURCE_AVAILABILITY',
-                payload: {
-                    elementID: 'content02',
-                    url: 'content02.html'
-                }
-            });
+            for (var i = 1; i <= 4; i++)
+                registration.active.postMessage({
+                    type: 'CHECK_RESOURCE_AVAILABILITY',
+                    payload: {
+                        elementID: 'content0'+i,
+                        url: 'content0'+i+'.html'
+                    }
+                });
         }
     });
 });
