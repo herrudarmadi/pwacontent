@@ -7,6 +7,10 @@ html, body {
   background:#0097da;
 }
 
+a {
+  color: #028ED5;
+}
+
 #offlineMessage {
   background: #D12119;
   color: #fff;
