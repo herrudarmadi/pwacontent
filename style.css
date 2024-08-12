@@ -3,8 +3,8 @@ html, body {
   font-optical-sizing: auto;
   margin: 0;
   padding: 0;
-  height: 100%;
   color: #333;
+  background:#0097da;
 }
 
 #offlineMessage {
@@ -17,7 +17,6 @@ html, body {
 }
 
 #sidemenu {
-  background: #0097da;
   color: #fff;
   width: 20%;
 }
@@ -25,6 +24,7 @@ html, body {
 #main-area {
   width: 80%;
   padding: 40px 16px;
+  background: #fff;
 }
 
 #session-desc {
