@@ -49,7 +49,7 @@ a {
   border-bottom: 2px solid rgb(243, 147, 27);
 }
 
-#main-tabs li.session-tab {
+#main-tabs li.session-tab, .forum-tabs li.session-tab {
     display: inline-block;
   background: rgb(217, 217, 217);
     padding: 12px;
@@ -57,7 +57,7 @@ a {
     border-top-left-radius: 8px;
 }
 
-#main-tabs li.session-tab.active {
+#main-tabs li.session-tab.active, .forum-tabs li.session-tab.active {
   background: rgb(243, 147, 27);
   color: #fff;
 }
