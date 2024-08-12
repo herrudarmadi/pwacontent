@@ -12,7 +12,8 @@ window.addEventListener('online', () => {
     document.getElementById('offlineMessage').style.display = 'none';
 });
 
-window.addEventListener('load', function() {
+window.addEventListener('load', checkResourceStatus);
+function checkResourceStatus() {
     document.getElementById('offlineMessage').style.display = (navigator.onLine ? 'none' : 'block');
 
     navigator.serviceWorker.ready.then(function(registration) {
@@ -27,7 +28,7 @@ window.addEventListener('load', function() {
                 });
         }
     });
-});
+}
 
 function download(el, url) {
     fetch(url)
@@ -80,6 +81,7 @@ document.getElementById('back-to-course-outline').onclick = function() {
     const contentArea = document.getElementById('content-area');
     outlineArea.style.display = "block";
     contentArea.style.display = "none";
+    checkResourceStatus();
 };
 
 // content page function
