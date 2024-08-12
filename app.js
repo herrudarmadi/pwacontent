@@ -107,3 +107,13 @@ function loadLastVisitedPage() {
         gotoPage(lastVisitedPage);
     }
 }
+
+var isDarkMode = false;
+function toggleDarkMode(el) {
+    const viewer = document.getElementById('content-viewer');
+    if (el.checked) {
+        viewer.classList.add('darkmode');
+    } else {
+        viewer.classList.remove('darkmode');
+    }
+}
