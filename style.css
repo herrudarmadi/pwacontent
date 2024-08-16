@@ -100,6 +100,13 @@ h6 {
     align-items: center;
     text-align: center;
     justify-content: center;
+    position:relative;
+}
+.resource-icon .status {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display:none;
 }
 #things-to-do li:hover {
     background: rgba(255, 255, 255, 0.1);

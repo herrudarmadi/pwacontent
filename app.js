@@ -18,7 +18,7 @@ function checkResourceStatus() {
 
     navigator.serviceWorker.ready.then(function(registration) {
         if (registration.active) {
-            for (var i = 1; i <= 4; i++)
+            for (var i = 1; i <= 4; i++) {
                 registration.active.postMessage({
                     type: 'CHECK_RESOURCE_AVAILABILITY',
                     payload: {
@@ -26,8 +26,19 @@ function checkResourceStatus() {
                         url: 'content0'+i+'.html'
                     }
                 });
+
+                setResourceUIStatus(i);
+            }
         }
     });
+}
+
+function setResourceUIStatus(i) {
+    const statusContent = localStorage.get('status-content0'+i);
+    const el = document.getElementById('resource-icon-'+i);
+
+    el.querySelector('inprogress').style.display = (statusContent == 'inprogress' ? 'block' : 'none');
+    el.querySelector('completed').style.display = (statusContent == 'completed' ? 'block' : 'none');
 }
 
 function download(el, url) {
@@ -51,6 +62,10 @@ function view(el, url) {
             });
         }
     });
+
+    const statusContent = localStorage.getItem('status-'+el);
+    if (statusContent == null || statusContent == 'completed')
+        localStorage.setItem('status-'+el, 'inprogress');
 }
 
 navigator.serviceWorker.addEventListener('message', function(e) {
@@ -97,6 +112,11 @@ function gotoPage(el) {
     }
     // store the progress for the next visit.
     localStorage.setItem('progress-content01', pageTarget);
+
+    const currentPageNum = parseInt(pageTarget.replace('p',''));
+    if (currentPageNum == pages.length) {
+        localStorage.setItem('status-content01', 'completed');
+    }
 }
 
 function loadLastVisitedPage() {
