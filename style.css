@@ -43,6 +43,9 @@ a {
   border-radius: 8px;
   color: #fff;
 }
+#things-to-do.completed {
+  background: linear-gradient(#8BC34A, #009688)
+}
 
 #main-tabs {
   padding-inline-start: 0;
@@ -60,6 +63,15 @@ a {
 #main-tabs li.session-tab.active, .forum-tabs li.session-tab.active {
   background: rgb(243, 147, 27);
   color: #fff;
+}
+
+#main-tabs li.session-tab.completed {
+  background: #4CAF50 !important;
+  color: #fff;
+}
+#main-tabs.completed {
+  padding-inline-start: 0;
+  border-bottom-color: #4CAF50;
 }
 
 #tab-content {

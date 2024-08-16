@@ -18,6 +18,7 @@ function checkResourceStatus() {
 
     navigator.serviceWorker.ready.then(function(registration) {
         if (registration.active) {
+            var allComplete = true;
             for (var i = 1; i <= 4; i++) {
                 registration.active.postMessage({
                     type: 'CHECK_RESOURCE_AVAILABILITY',
@@ -27,7 +28,15 @@ function checkResourceStatus() {
                     }
                 });
 
-                setResourceUIStatus(i);
+                if (setResourceUIStatus(i) == 'inprogress') 
+                    allComplete = false;
+            }
+            if (allComplete) {
+                const mainTab = document.getElementById('main-tabs');
+                mainTab.classList.add('completed');
+                mainTab.querySelector('.active').classList.add('completed');
+                document.getElementById('things-to-do').classList.add('completed');
+                
             }
         }
     });
@@ -39,6 +48,8 @@ function setResourceUIStatus(i) {
 
     el.querySelector('.inprogress').style.display = (statusContent == 'inprogress' ? 'block' : 'none');
     el.querySelector('.completed').style.display = (statusContent == 'completed' ? 'block' : 'none');
+
+    return statusContent;
 }
 
 function download(el, url) {
