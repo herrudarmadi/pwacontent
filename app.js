@@ -34,11 +34,11 @@ function checkResourceStatus() {
 }
 
 function setResourceUIStatus(i) {
-    const statusContent = localStorage.get('status-content0'+i);
+    const statusContent = localStorage.getItem('status-content0'+i);
     const el = document.getElementById('resource-icon-'+i);
 
-    el.querySelector('inprogress').style.display = (statusContent == 'inprogress' ? 'block' : 'none');
-    el.querySelector('completed').style.display = (statusContent == 'completed' ? 'block' : 'none');
+    el.querySelector('.inprogress').style.display = (statusContent == 'inprogress' ? 'block' : 'none');
+    el.querySelector('.completed').style.display = (statusContent == 'completed' ? 'block' : 'none');
 }
 
 function download(el, url) {
