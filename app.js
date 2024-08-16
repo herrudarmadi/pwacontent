@@ -171,7 +171,7 @@ function registerActivityIndicators() {
     /* Window Scrolling */
     window.addEventListener("scroll", function(){
         for (var i=0; i<items.length; i++)
-            if(isInViewport(items[i])) {
+            if(items[i].checkVisibility() && isInViewport(items[i])) {
                 items[i].classList.add("animate__animated","animate__headShake", "animate__repeat-2", "animate__delay-1s"); 
             }
     });
