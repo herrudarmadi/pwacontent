@@ -28,7 +28,8 @@ function checkResourceStatus() {
                     }
                 });
 
-                if (setResourceUIStatus(i) == 'inprogress') 
+                const resStatus = setResourceUIStatus(i);
+                if (!resStatus || resStatus == 'inprogress') 
                     allComplete = false;
             }
             if (allComplete) {
