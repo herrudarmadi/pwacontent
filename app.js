@@ -64,6 +64,8 @@ navigator.serviceWorker.addEventListener('message', function(e) {
             outlineArea.style.display = "none";
             contentArea.style.display = "block";
             document.getElementById('content-viewer').innerHTML = e.data.payload.html;
+
+            registerActivityIndicators();
             
             loadLastVisitedPage();
         // break; remove break, because after view resource, it will also execute the checkmark for resource avail
@@ -112,4 +114,33 @@ function toggleDarkMode(el) {
     } else {
         viewer.classList.remove('darkmode');
     }
+}
+
+function isInViewport(item) {
+
+    var bounding = item.getBoundingClientRect(),
+        myElementHeight = item.offsetHeight,
+        myElementWidth = item.offsetWidth;
+
+    if(bounding.top >= -myElementHeight
+        && bounding.left >= -myElementWidth
+        && bounding.right <= (window.innerWidth || document.documentElement.clientWidth) + myElementWidth
+        && bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) + myElementHeight) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+function registerActivityIndicators() {
+    const items = document.getElementsByClassName("activity");
+
+    /* Window Scrolling */
+    window.addEventListener("scroll", function(){
+        for (var i=0; i<items.length; i++)
+            if(isInViewport(items[i])) {
+                items[i].classList.add("animate__animated","animate__shakeY", "animate__repeat-2", "animate__delay-2s"); 
+            }
+    });
 }
