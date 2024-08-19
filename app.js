@@ -180,8 +180,10 @@ function registerActivityIndicators() {
 function checkQuizAnswer(el, feedbackElID) {
     const feedbackEl = document.getElementById(feedbackElID);
     if (el.dataset.answer == 'yes') {
+        feedbackEl.classList.remove('incorrect');
         feedbackEl.classList.add('correct');
     } else {
+        feedbackEl.classList.remove('correct');
         feedbackEl.classList.add('incorrect');
     }
     feedbackEl.innerHTML = el.dataset.feedback;
