@@ -162,10 +162,14 @@ h6 {
 
 .quiz-option {
   display:block;
+  margin-bottom: 8px;
 }
-.correct {
-  border-top: 2px solid #76B743;
+.correct, .incorrect {
+  border: 2px solid #76B743;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    padding: 8px;
 }
 .incorrect {
-  border-top: 2px solid #D12119;
+  border: 2px solid #D12119;
 }
