@@ -166,7 +166,7 @@ h6 {
 }
 .correct, .incorrect {
   border: 2px solid #76B743;
-    margin-bottom: 16px;
+    margin-top: 16px;
     border-radius: 8px;
     padding: 8px;
 }
