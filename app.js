@@ -177,8 +177,8 @@ function registerActivityIndicators() {
     });
 }
 
-function checkQuizAnswer(el, feedbackEl) {
-    const feedbackEl = document.getElementById(feedbackEl);
+function checkQuizAnswer(el, feedbackElID) {
+    const feedbackEl = document.getElementById(feedbackElID);
     if (el.dataset.answer == 'yes') {
         feedbackEl.classList.add('correct');
     } else {
