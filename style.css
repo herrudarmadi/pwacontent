@@ -159,3 +159,13 @@ h6 {
   float: right;
   margin-top: 32px;
 }
+
+.quiz-option {
+  display:block;
+}
+.correct {
+  border-top: 2px solid #76B743;
+}
+.incorrect {
+  border-top: 2px solid #D12119;
+}

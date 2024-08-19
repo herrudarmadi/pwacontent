@@ -176,3 +176,13 @@ function registerActivityIndicators() {
             }
     });
 }
+
+function checkQuizAnswer(el, feedbackEl) {
+    const feedbackEl = document.getElementById(feedbackEl);
+    if (el.dataset.answer == 'yes') {
+        feedbackEl.classList.add('correct');
+    } else {
+        feedbackEl.classList.add('incorrect');
+    }
+    feedbackEl.innerHTML = el.dataset.feedback;
+}
