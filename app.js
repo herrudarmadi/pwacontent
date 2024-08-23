@@ -19,6 +19,7 @@ function checkResourceStatus() {
     navigator.serviceWorker.ready.then(function(registration) {
         if (registration.active) {
             var allComplete = true;
+            var resAnchorAccessed = false;
             for (var i = 1; i <= 4; i++) {
                 registration.active.postMessage({
                     type: 'CHECK_RESOURCE_AVAILABILITY',
@@ -30,7 +31,9 @@ function checkResourceStatus() {
 
                 const resStatus = setResourceUIStatus(i);
 
-                if (resStatus) unlockResourceUI(i);
+                if (i == 0 && !resStatus) resAnchorAccessed = true;
+
+                if (resAnchorAccessed) unlockResourceUI(i);
                 
                 if (!resStatus || resStatus == 'inprogress') 
                     allComplete = false;
