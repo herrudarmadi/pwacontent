@@ -91,7 +91,7 @@ self.addEventListener('message', function(event) {
       break;
 
       case 'CLEAR_CACHE': 
-        cache.delete(DYNAMIC_CACHE_NAME);
+        return caches.delete(DYNAMIC_CACHE_NAME);
     }
   });
 
