@@ -207,7 +207,11 @@ function checkQuizAnswer(el, feedbackElID) {
 }
 
 function reset() {
-    registration.active.postMessage({type: 'CLEAR_CACHE'});
+    navigator.serviceWorker.ready.then(function(registration) {
+        if (registration.active) {
+            registration.active.postMessage({type: 'CLEAR_CACHE'});
+        }
+    });
     localStorage.clear();
     location.reload();
 }   
