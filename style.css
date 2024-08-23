@@ -181,3 +181,6 @@ h6 {
 .incorrect {
   border: 2px solid #D12119;
 }
+.lock {
+  margin-right: 8px;
+}
