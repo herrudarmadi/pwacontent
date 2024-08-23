@@ -82,7 +82,14 @@ function download(el, url) {
     console.log('download clicked for ' + url);
 }
 
+function showLockMessage () {
+    alert('Please access the Learning Anchor before accessing this resource/activity.');
+}
 function view(el, url) {
+    if (el.classList.contains('locked')) {
+        showLockMessage();
+        return;
+    }
     navigator.serviceWorker.ready.then(function(registration) {
         if (registration.active) {
             registration.active.postMessage({
