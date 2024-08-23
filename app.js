@@ -29,8 +29,11 @@ function checkResourceStatus() {
                 });
 
                 const resStatus = setResourceUIStatus(i);
-                if (!resStatus || resStatus == 'inprogress') 
+                
+                if (!resStatus || resStatus == 'inprogress') {
+                    unlockResourceUI(i);
                     allComplete = false;
+                }
             }
             if (allComplete) {
                 const mainTab = document.getElementById('main-tabs');
@@ -51,6 +54,16 @@ function setResourceUIStatus(i) {
     el.querySelector('.completed').style.display = (statusContent == 'completed' ? 'block' : 'none');
 
     return statusContent;
+}
+
+function unlockResourceUI(i) {
+    const el = document.getElementById('lock0'+i);
+    if (!el) return;
+
+    el.style.display = 'none';
+
+    const parentEl = document.getElementById('resource-icon-'+i).parentElement;
+    parentEl.classList.remove('locked');
 }
 
 function download(el, url) {

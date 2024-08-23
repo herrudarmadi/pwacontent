@@ -128,6 +128,10 @@ h6 {
   align-items: center;
   cursor: pointer;
 }
+#things-to-do li .locked {
+  color: rgba(255, 255, 255, 0.5);
+  cursor: disabled;
+}
 
 #back-to-course-outline {
   width: 50px;
@@ -141,6 +145,9 @@ h6 {
 }
 .act-download {
   cursor:pointer;
+}
+.act {
+  display: flex;
 }
 
 #content-area {
