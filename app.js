@@ -205,3 +205,8 @@ function checkQuizAnswer(el, feedbackElID) {
     }
     feedbackEl.innerHTML = el.dataset.feedback;
 }
+
+function reset() {
+    localStorage.clear();
+    location.reload();
+}   
