@@ -130,7 +130,7 @@ h6 {
 }
 #things-to-do li .locked {
   color: rgba(255, 255, 255, 0.5);
-  cursor: disabled;
+  cursor: not-allowed;
 }
 
 #back-to-course-outline {
