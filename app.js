@@ -31,7 +31,7 @@ function checkResourceStatus() {
 
                 const resStatus = setResourceUIStatus(i);
 
-                if (i == 1 && !resStatus) resAnchorAccessed = true;
+                if (i == 1 && resStatus) resAnchorAccessed = true;
 
                 if (resAnchorAccessed) unlockResourceUI(i);
                 
