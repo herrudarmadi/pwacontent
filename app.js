@@ -207,6 +207,7 @@ function checkQuizAnswer(el, feedbackElID) {
 }
 
 function reset() {
+    registration.active.postMessage({type: 'CLEAR_CACHE'});
     localStorage.clear();
     location.reload();
 }   
