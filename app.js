@@ -85,8 +85,8 @@ function download(el, url) {
 function showLockMessage () {
     alert('Please access the Learning Anchor before accessing this resource/activity.');
 }
-function view(el, url) {
-    if (document.getElementById(el).classList.contains('locked')) {
+function view(el, targetElStr, url) {
+    if (el.classList.contains('locked')) {
         showLockMessage();
         return;
     }
@@ -94,14 +94,14 @@ function view(el, url) {
         if (registration.active) {
             registration.active.postMessage({
                 type: 'VIEW_RESOURCE',
-                payload: {elementID: el, url: url}
+                payload: {elementID: targetElStr, url: url}
             });
         }
     });
 
-    const statusContent = localStorage.getItem('status-'+el);
+    const statusContent = localStorage.getItem('status-'+targetElStr);
     if (statusContent == null || statusContent == 'completed')
-        localStorage.setItem('status-'+el, 'inprogress');
+        localStorage.setItem('status-'+targetElStr, 'inprogress');
 }
 
 navigator.serviceWorker.addEventListener('message', function(e) {
