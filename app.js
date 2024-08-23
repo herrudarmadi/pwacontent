@@ -29,11 +29,12 @@ function checkResourceStatus() {
                 });
 
                 const resStatus = setResourceUIStatus(i);
+
+                if (resStatus) unlockResourceUI(i);
                 
-                if (!resStatus || resStatus == 'inprogress') {
-                    unlockResourceUI(i);
+                if (!resStatus || resStatus == 'inprogress') 
                     allComplete = false;
-                }
+                
             }
             if (allComplete) {
                 const mainTab = document.getElementById('main-tabs');
