@@ -86,6 +86,9 @@ function showLockMessage () {
     alert('Please access the Learning Anchor before accessing this resource/activity.');
 }
 function view(el, targetElStr, url) {
+    if (typeof el == 'string') {
+        el = document.getElementById(el);
+    }
     if (el.classList.contains('locked')) {
         showLockMessage();
         return;
