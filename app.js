@@ -89,7 +89,7 @@ function view(el, targetElStr, url) {
     if (typeof el == 'string') {
         el = document.getElementById(el);
     }
-    if (el.classList.contains('locked')) {
+    if (el && el.classList.contains('locked')) {
         showLockMessage();
         return;
     }
